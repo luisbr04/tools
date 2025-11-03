@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Bonificación - Excel Template</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #2d3748;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #4a5568;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 13px;
+        }
+        .excel-table th {
+            background: #2d3748;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #1a202c;
+        }
+        .excel-table td {
+            padding: 10px 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .excel-table tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        .excel-table tr:hover {
+            background-color: #edf2f7;
+        }
+        .header-cell {
+            background: #4a5568 !important;
+            color: white !important;
+            font-weight: bold;
+            text-align: center !important;
+        }
+        .config-cell {
+            background: #ebf8ff !important;
+            font-weight: bold;
+        }
+        .formula-cell {
+            background: #fef5e7 !important;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: #d97706;
+        }
+        .result-cell {
+            background: #d1fae5 !important;
+            font-weight: bold;
+            color: #065f46;
+        }
+        .total-row {
+            background: #bee3f8 !important;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        .instructions {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .formula-box {
+            background: #f1f5f9;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .cell-ref {
+            background: #dbeafe;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #1e40af;
+        }
+        .note {
+            background: #e0e7ff;
+            border-left: 4px solid #4f46e5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+        }
+        code {
+            background: #1e293b;
+            color: #22d3ee;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Sistema de Bonificación por KPIs - Plantilla Excel</h1>
+        
+        <div class="instructions">
+            <h3>🎯 Cómo usar esta plantilla:</h3>
+            <ol>
+                <li>Copia las tablas de abajo a tu Excel</li>
+                <li>Copia las fórmulas exactamente como están mostradas</li>
+                <li>Ajusta las referencias de celda según donde pegues cada tabla</li>
+                <li>Las celdas amarillas son fórmulas, las azules son configurables, las verdes son resultados</li>
+            </ol>
+        </div>
+
+        <h2>1️⃣ CONFIGURACIÓN (Hoja: Config)</h2>
+        <div class="section">
+            <table class="excel-table">
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">Celda</th>
+                        <th style="width: 300px;">Parámetro</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="cell-ref">B2</td>
+                        <td>Salario Base Trimestral</td>
+                        <td class="config-cell">$10,000</td>
+                    </tr>
+                    <tr>
+                        <td class="cell-ref">B3</td>
+                        <td>Bono Máximo (%)</td>
+                        <td class="config-cell">10%</td>
+                    </tr>
+                    <tr>
+                        <td class="cell-ref">B4</td>
+                        <td>Bono Máximo ($)</td>
+                        <td class="formula-cell">=B2*B3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>2️⃣ CRITERIOS DE EVALUACIÓN (Hoja: Criterios)</h2>
+        <div class="section">
+            <table class="excel-table">
+                <thead>
+                    <tr>
+                        <th>KPI</th>
+                        <th>Peso %</th>
+                        <th>Métrica</th>
+                        <th>Excelente (100%)</th>
+                        <th>Bueno (75%)</th>
+                        <th>Aceptable (50%)</th>
+                        <th>No Cumple (0%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Calidad del Dato</strong></td>
+                        <td class="config-cell">10%</td>
+                        <td>Errores reportados</td>
+                        <td>0-1</td>
+                        <td>2-3</td>
+                        <td>4-5</td>
+                        <td>>5</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ahorro en Tiempo</strong></td>
+                        <td class="config-cell">30%</td>
+                        <td>% reducción</td>
+                        <td>≥15%</td>
+                        <td>10-14.9%</td>
+                        <td>5-9.9%</td>
+                        <td><5%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ahorro en Dinero</strong></td>
+                        <td class="config-cell">30%</td>
+                        <td>USD trimestral</td>
+                        <td>≥$400</td>
+                        <td>$300-399</td>
+                        <td>$200-299</td>
+                        <td><$200</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tiempos de Refresh</strong></td>
+                        <td class="config-cell">15%</td>
+                        <td>Horas</td>
+                        <td>≤48h</td>
+                        <td>49-60h</td>
+                        <td>61-72h</td>
+                        <td>>72h</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Actividades de Apoyo</strong></td>
+                        <td class="config-cell">15%</td>
+                        <td>Puntuación 0-100</td>
+                        <td>90-100</td>
+                        <td>75-89</td>
+                        <td>60-74</td>
+                        <td><60</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>3️⃣ CALCULADORA DE BONIFICACIÓN (Hoja: Evaluación)</h2>
+        <div class="section">
+            <table class="excel-table">
+                <thead>
+                    <tr>
+                        <th style="width: 180px;">KPI</th>
+                        <th style="width: 100px;">Valor Real</th>
+                        <th style="width: 100px;">Score %</th>
+                        <th style="width: 80px;">Peso %</th>
+                        <th style="width: 100px;">Ponderado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Calidad del Dato</td>
+                        <td class="config-cell">2</td>
+                        <td class="formula-cell">Ver fórmula abajo</td>
+                        <td>10%</td>
+                        <td class="formula-cell">=C2*D2</td>
+                    </tr>
+                    <tr>
+                        <td>Ahorro en Tiempo</td>
+                        <td class="config-cell">12%</td>
+                        <td class="formula-cell">Ver fórmula abajo</td>
+                        <td>30%</td>
+                        <td class="formula-cell">=C3*D3</td>
+                    </tr>
+                    <tr>
+                        <td>Ahorro en Dinero</td>
+                        <td class="config-cell">$350</td>
+                        <td class="formula-cell">Ver fórmula abajo</td>
+                        <td>30%</td>
+                        <td class="formula-cell">=C4*D4</td>
+                    </tr>
+                    <tr>
+                        <td>Tiempos de Refresh</td>
+                        <td class="config-cell">55</td>
+                        <td class="formula-cell">Ver fórmula abajo</td>
+                        <td>15%</td>
+                        <td class="formula-cell">=C5*D5</td>
+                    </tr>
+                    <tr>
+                        <td>Actividades de Apoyo</td>
+                        <td class="config-cell">80</td>
+                        <td class="formula-cell">Ver fórmula abajo</td>
+                        <td>15%</td>
+                        <td class="formula-cell">=C6*D6</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td><strong>TOTAL</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td class="result-cell">100%</td>
+                        <td class="result-cell formula-cell">=SUM(E2:E6)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 20px;">
+                <table class="excel-table" style="width: 50%;">
+                    <tr>
+                        <td style="background: #4a5568; color: white; font-weight: bold;">Puntuación Total</td>
+                        <td class="result-cell formula-cell">=E7</td>
+                    </tr>
+                    <tr>
+                        <td style="background: #4a5568; color: white; font-weight: bold;">Bono Máximo</td>
+                        <td class="result-cell formula-cell">=Config!B4</td>
+                    </tr>
+                    <tr>
+                        <td style="background: #4a5568; color: white; font-weight: bold;">BONO A RECIBIR</td>
+                        <td class="result-cell formula-cell">=Config!B4*(E7/100)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <h2>4️⃣ FÓRMULAS PARA LA COLUMNA "SCORE %" (Celda C2 a C6)</h2>
+        <div class="section">
+            <div class="note">
+                <strong>📌 Importante:</strong> Estas fórmulas usan anidación de IFs. Cópialas exactamente en cada celda correspondiente.
+            </div>
+
+            <h3>C2 - Calidad del Dato (errores reportados):</h3>
+            <div class="formula-box">
+                <code>=IF(B2<=1,100,IF(B2<=3,75,IF(B2<=5,50,0)))</code>
+            </div>
+
+            <h3>C3 - Ahorro en Tiempo (% reducción):</h3>
+            <div class="formula-box">
+                <code>=IF(B3>=15,100,IF(B3>=10,75,IF(B3>=5,50,0)))</code>
+            </div>
+
+            <h3>C4 - Ahorro en Dinero (USD):</h3>
+            <div class="formula-box">
+                <code>=IF(B4>=400,100,IF(B4>=300,75,IF(B4>=200,50,0)))</code>
+            </div>
+
+            <h3>C5 - Tiempos de Refresh (horas):</h3>
+            <div class="formula-box">
+                <code>=IF(B5<=48,100,IF(B5<=60,75,IF(B5<=72,50,0)))</code>
+            </div>
+
+            <h3>C6 - Actividades de Apoyo (puntuación 0-100):</h3>
+            <div class="formula-box">
+                <code>=IF(B6>=90,100,IF(B6>=75,75,IF(B6>=60,50,0)))</code>
+            </div>
+        </div>
+
+        <h2>5️⃣ PASO A PASO PARA IMPLEMENTAR</h2>
+        <div class="section">
+            <ol style="line-height: 2;">
+                <li><strong>Crea una nueva hoja llamada "Config"</strong> y pega la tabla de configuración</li>
+                <li><strong>Crea una hoja llamada "Criterios"</strong> y pega la tabla de criterios (es solo referencia, no tiene fórmulas)</li>
+                <li><strong>Crea una hoja llamada "Evaluación"</strong> y pega la tabla calculadora</li>
+                <li><strong>En la columna B (Valor Real)</strong> de la hoja Evaluación, ingresa los valores reales del trimestre</li>
+                <li><strong>En la columna C (Score %)</strong>, copia las fórmulas IF que están arriba</li>
+                <li><strong>En la columna E (Ponderado)</strong>, las fórmulas multiplican Score * Peso</li>
+                <li><strong>El resultado final</strong> estará en la celda del "Bono a Recibir"</li>
+            </ol>
+        </div>
+
+        <div class="instructions">
+            <h3>💡 Tips adicionales:</h3>
+            <ul>
+                <li><strong>Formato condicional:</strong> Puedes agregar colores automáticos para scores >90 (verde), 75-89 (azul), 50-74 (amarillo), <50 (rojo)</li>
+                <li><strong>Validación de datos:</strong> Limita los valores de entrada para evitar errores (ej: Actividades de Apoyo debe ser 0-100)</li>
+                <li><strong>Protección de celdas:</strong> Bloquea las celdas con fórmulas para que solo se puedan editar los valores reales</li>
+                <li><strong>Gráficos:</strong> Agrega un gráfico de radar para visualizar el desempeño en cada KPI</li>
+            </ul>
+        </div>
+
+        <div class="note" style="background: #dcfce7; border-left-color: #16a34a;">
+            <strong>✅ Ventajas de este sistema:</strong>
+            <ul>
+                <li>Totalmente automático - solo ingresas valores reales</li>
+                <li>Fácil de ajustar umbrales y pesos</li>
+                <li>Transparente para el evaluado</li>
+                <li>Escalable a múltiples empleados (copia la hoja Evaluación)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
